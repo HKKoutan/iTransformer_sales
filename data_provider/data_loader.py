@@ -632,7 +632,10 @@ class Dataset_Sales(Dataset):
         return len(self.data_x) - self.seq_len - self.pred_len + 1
 
     def inverse_transform(self, data):
-        return self.scaler.inverse_transform(data)
+        if self.scale:
+            return self.scaler.inverse_transform(data)
+        else:
+            return data
 
 class Dataset_Predall(Dataset):
     def __init__(self, root_path, flag='pred', size=None,
@@ -739,4 +742,7 @@ class Dataset_Predall(Dataset):
         return len(self.data_x) - self.seq_len + 1
 
     def inverse_transform(self, data):
-        return self.scaler.inverse_transform(data)
+        if self.scale:
+            return self.scaler.inverse_transform(data)
+        else:
+            return data
